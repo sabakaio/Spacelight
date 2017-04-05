@@ -13,6 +13,7 @@
 		688E36361E8BCE5F008F2CCA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 688E36341E8BCE5F008F2CCA /* Main.storyboard */; };
 		688E36411E8BCE5F008F2CCA /* SpacelightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688E36401E8BCE5F008F2CCA /* SpacelightTests.swift */; };
 		688E364C1E8BCE5F008F2CCA /* SpacelightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688E364B1E8BCE5F008F2CCA /* SpacelightUITests.swift */; };
+		68EE79991E94018100545048 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EE79981E94018100545048 /* WindowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		688E36471E8BCE5F008F2CCA /* SpacelightUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpacelightUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		688E364B1E8BCE5F008F2CCA /* SpacelightUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacelightUITests.swift; sourceTree = "<group>"; };
 		688E364D1E8BCE5F008F2CCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		68EE79981E94018100545048 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				688E36301E8BCE5F008F2CCA /* ViewController.swift */,
 				688E36321E8BCE5F008F2CCA /* Assets.xcassets */,
 				688E36341E8BCE5F008F2CCA /* Main.storyboard */,
+				68EE79981E94018100545048 /* WindowController.swift */,
 				688E36371E8BCE5F008F2CCA /* Info.plist */,
 			);
 			path = Spacelight;
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				688E36311E8BCE5F008F2CCA /* ViewController.swift in Sources */,
+				68EE79991E94018100545048 /* WindowController.swift in Sources */,
 				688E362F1E8BCE5F008F2CCA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,6 +511,7 @@
 				688E36521E8BCE5F008F2CCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		688E36531E8BCE5F008F2CCA /* Build configuration list for PBXNativeTarget "SpacelightTests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +520,7 @@
 				688E36551E8BCE5F008F2CCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		688E36561E8BCE5F008F2CCA /* Build configuration list for PBXNativeTarget "SpacelightUITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +529,7 @@
 				688E36581E8BCE5F008F2CCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
