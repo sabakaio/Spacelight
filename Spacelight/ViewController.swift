@@ -19,6 +19,7 @@ func transfer<T : AnyObject>(ptr : UnsafeMutableRawPointer) -> T {
 class ViewController: NSViewController {
     @IBOutlet var label: NSTextFieldCell!
     @IBOutlet var appLabel: NSTextField!
+    @IBOutlet var table: NSTableView!
 
     //var commandKeyDown = false
     var windowVisible = true
@@ -52,7 +53,6 @@ class ViewController: NSViewController {
             let hasCommand = flags.contains(CGEventFlags.maskCommand)
             print(keyCode.description, hasCommand)
             let appName = NSWorkspace.shared().frontmostApplication?.localizedName
-            
             
             viewController.label.stringValue = flags.rawValue.description
             viewController.appLabel.stringValue = appName!
