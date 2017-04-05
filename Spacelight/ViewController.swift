@@ -20,26 +20,95 @@ class ViewController: NSViewController {
     @IBOutlet var label: NSTextFieldCell!
     @IBOutlet var appLabel: NSTextField!
 
+    //var commandKeyDown = false
+    var windowVisible = true
+    var skip = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        func callback(
+            proxy: OpaquePointer,
+            type: CGEventType,
+            event: CGEvent,
+            refcon: UnsafeMutableRawPointer?
+            ) -> Unmanaged<CGEvent>? {
 
-        func callback(proxy: OpaquePointer, type: CGEventType, event: CGEvent, refcon: UnsafeMutableRawPointer?) -> Unmanaged<CGEvent>? {
-
+            let viewController: ViewController = transfer(ptr: refcon!)
+            
+            func hideWindow() {
+                viewController.view.window?.orderOut(true)
+                viewController.windowVisible = false
+            }
+            
+            func showWindow() {
+                viewController.view.window?.orderFront(true)
+                viewController.windowVisible = true
+            }
+            
             //  if [.keyDown , .keyUp].contains(type) {
-            var keyCode = event.getIntegerValueField(.keyboardEventKeycode)
-            var something = event.flags
-            print(keyCode.description)
+            let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
+            let flags = event.flags
+            let hasCommand = flags.contains(CGEventFlags.maskCommand)
+            print(keyCode.description, hasCommand)
             let appName = NSWorkspace.shared().frontmostApplication?.localizedName
-            let that: ViewController = transfer(ptr: refcon!)
-            that.label.stringValue = something.rawValue.description//keyCode.description
-            that.appLabel.stringValue = appName!
-            //self.lastKey = keyCode.description
-            //                if keyCode == 0 {
-            //                    keyCode = 6
-            //                } else if keyCode == 6 {
-            //                    keyCode = 0
-            //                }
-            //                event.setIntegerValueField(.keyboardEventKeycode, value: keyCode)
+            
+            
+            viewController.label.stringValue = flags.rawValue.description
+            viewController.appLabel.stringValue = appName!
+        
+            if keyCode == 53 && viewController.windowVisible {
+                // hide with escape
+                viewController.view.window!.orderOut(true)
+                viewController.windowVisible = false
+            }
+            
+            if keyCode != 53 && keyCode != 55 && !viewController.windowVisible && hasCommand {
+                // Skip on cmd+something (e.g cmd+tab)
+                viewController.skip = true
+                return Unmanaged.passRetained(event)
+            }
+            
+            if (appName == "iTerm2") {
+                if viewController.windowVisible && [.keyDown].contains(type) {
+                    
+                    if keyCode == 9 {
+                        // replace mnemonic cmd - v with cmd+shift+d, split
+                        event.setIntegerValueField(.keyboardEventKeycode, value: 2)
+                        event.flags = event.flags.union(CGEventFlags.maskCommand)
+                    } else if keyCode == 1 {
+                        // replace mnemonic cmd - s with cmd+d, vetical split
+                        event.setIntegerValueField(.keyboardEventKeycode, value: 2)
+                        event.flags = event.flags.union(CGEventFlags.maskCommand)
+                        event.flags = event.flags.union(CGEventFlags.maskShift)
+                    }
+                    
+                    
+                    hideWindow()
+                    
+                    return Unmanaged.passRetained(event)
+                }
+            }
+            
+            if keyCode == 55 {
+                if viewController.windowVisible {
+                    if !hasCommand {
+                        viewController.view.window?.orderOut(true)
+                        viewController.windowVisible = false
+                    }
+                } else {
+                    if !hasCommand {
+                        if !viewController.skip {
+                            viewController.view.window?.orderFront(true)
+                            viewController.windowVisible = true
+                        } else {
+                            viewController.skip = false
+                        }
+                    }
+                }
+            }
+
+            //
             //}
             return Unmanaged.passRetained(event)
         }
@@ -60,7 +129,6 @@ class ViewController: NSViewController {
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
         CGEvent.tapEnable(tap: eventTap, enable: true)
         //CFRunLoopRun()
-
     }
 
     override var representedObject: Any? {

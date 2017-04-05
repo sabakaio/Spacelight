@@ -12,7 +12,14 @@ class WindowController: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+        self.window!.level = Int(CGWindowLevelForKey(.maximumWindow))
+        self.window!.orderOut(true)
+        self.window!.titleVisibility = NSWindowTitleVisibility.hidden;
+        self.window!.titlebarAppearsTransparent = true;
+        self.window!.isMovableByWindowBackground  = true;
+        self.window!.standardWindowButton(NSWindowButton.closeButton)!.isHidden = true;
+        self.window!.standardWindowButton(NSWindowButton.miniaturizeButton)!.isHidden = true;
+        self.window!.standardWindowButton(NSWindowButton.zoomButton)!.isHidden = true;
     }
 
 }
